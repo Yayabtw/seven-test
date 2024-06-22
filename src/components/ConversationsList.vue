@@ -39,7 +39,7 @@ const route = router.currentRoute.value
 const userId = route.params.id
 
 const formatDate = (timestamp) => {
-  const date = new Date(timestamp * 1000) // Convert from Unix timestamp (seconds) to milliseconds
+  const date = new Date(timestamp * 1000)
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',

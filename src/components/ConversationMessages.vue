@@ -51,7 +51,7 @@ const userId = ref(parseInt(route.query.userId))
 const newMessage = ref('')
 
 const formatDate = (timestamp) => {
-  const date = new Date(timestamp * 1000) // Convert from Unix timestamp (seconds) to milliseconds
+  const date = new Date(timestamp * 1000)
   return date.toLocaleString('en-US', {
     year: 'numeric',
     month: 'short',
@@ -63,7 +63,7 @@ const formatDate = (timestamp) => {
 
 const getAuthorName = (authorId) => {
   if (authorId === userId.value) {
-    return '' // or use the current user's nickname
+    return ''
   }
   const user = users.value.find(user => user.id === authorId)
   return user ? user.nickname : 'Unknown'
@@ -73,12 +73,12 @@ const sendMessage = async () => {
   if (newMessage.value.trim() !== '') {
     await conversationsStore.postMessage(conversationId, userId.value, newMessage.value)
     newMessage.value = ''
-    await conversationsStore.fetchMessages(conversationId) // Refresh messages after sending a new one
+    await conversationsStore.fetchMessages(conversationId)
   }
 }
 
 onMounted(async () => {
-  await conversationsStore.fetchConversations(userId.value) // Fetch conversations to get the latest data
+  await conversationsStore.fetchConversations(userId.value)
   await conversationsStore.fetchMessages(conversationId)
   await conversationsStore.fetchUsers()
 })
@@ -160,8 +160,8 @@ const users = computed(() => conversationsStore.users)
 
 @media (max-width: 600px) {
   .chat-bubble {
-    max-width: 90%; /* Increase max-width for small screens */
-    font-size: 0.9em; /* Adjust font size for readability */
+    max-width: 90%;
+    font-size: 0.9em
   }
 }
 </style>

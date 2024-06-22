@@ -73,7 +73,3 @@ onMounted(() => {
   conversationsStore.fetchUsers()
 })
 </script>
-
-<style scoped>
-/* Add any styles if necessary */
-</style>
