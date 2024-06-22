@@ -46,7 +46,7 @@ const route = useRoute()
 
 const conversationId = route.params.id
 
-const userId = ref(route.query.userId).value
+const userId = ref(parseInt(route.query.userId)).value
 const newMessage = ref('')
 
 const formatDate = (timestamp) => {
@@ -65,9 +65,12 @@ const getAuthorName = (authorId) => {
   return user ? user.nickname : 'Unknown'
 }
 
-const sendMessage = () => {
-  conversationsStore.sendMessage(conversationId, userId, newMessage.value)
-  newMessage.value = ''
+const sendMessage = async () => {
+  if (newMessage.value.trim() !== '') {
+    await conversationsStore.sendMessage(conversationId, userId, newMessage.value)
+    newMessage.value = ''
+    await conversationsStore.fetchMessages(conversationId)
+  }
 }
 
 onMounted(() => {
