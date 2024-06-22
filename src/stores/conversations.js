@@ -47,12 +47,25 @@ export const useConversationsStore = defineStore('conversations', {
         console.error('Error sending message:', error)
       }
     },
-    async getAuthorName (authorId) {
+    async addConversation (senderId, recipientId, recipientNickname, senderNickname, initialMessage) {
       try {
-        const response = await axios.get(`http://localhost:3005/users/${authorId}`)
-        return response.data.name
+        const lastMessageTimestamp = Math.floor(Date.now() / 1000)
+        const newConversation = {
+          recipientId,
+          recipientNickname,
+          senderId,
+          senderNickname,
+          lastMessageTimestamp
+        }
+
+        const response = await axios.post('http://localhost:3005/conversations', newConversation)
+        const conversationId = response.data.id
+
+        await this.sendMessage(conversationId, senderId, initialMessage)
+        await this.fetchConversations(senderId)
+        return conversationId
       } catch (error) {
-        console.error('Error fetching author name:', error)
+        console.error('Error adding conversation:', error)
       }
     }
   }

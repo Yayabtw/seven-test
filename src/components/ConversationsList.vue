@@ -1,6 +1,11 @@
 <template>
   <v-container>
     <v-row>
+      <v-col cols="12" class="text-right">
+        <v-btn color="primary" @click="createConversation">Create Conversation</v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
       <v-col cols="12">
         <v-list>
           <v-list-item
@@ -44,6 +49,10 @@ const formatDate = (timestamp) => {
 
 const openConversation = (conversationId) => {
   router.push({ name: 'ConversationMessages', params: { id: conversationId }, query: { userId } })
+}
+
+const createConversation = () => {
+  router.push({ name: 'ConversationForm', params: { userId } })
 }
 
 onMounted(() => {
