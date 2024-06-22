@@ -12,7 +12,7 @@
               <v-icon>mdi-account-circle</v-icon>
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>{{ conversation.senderNickname }}</v-list-item-title>
+              <v-list-item-title>{{ conversation.senderId === parseInt(userId) ? conversation.recipientNickname : conversation.senderNickname }}</v-list-item-title>
               <v-list-item-subtitle>{{ formatDate(conversation.lastMessageTimestamp) }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -43,7 +43,7 @@ const formatDate = (timestamp) => {
 }
 
 const openConversation = (conversationId) => {
-  router.push(`/conversation/${conversationId}`)
+  router.push({ name: 'ConversationMessages', params: { id: conversationId }, query: { userId } })
 }
 
 onMounted(() => {
@@ -54,5 +54,4 @@ const conversations = computed(() => conversationsStore.conversations)
 </script>
 
 <style scoped>
-/* Add any styles if necessary */
 </style>
